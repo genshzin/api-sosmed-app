@@ -3,8 +3,9 @@ import * as bcrypt from 'bcrypt';
 import { v4 as uuidv4 } from 'uuid';
 import { User } from '../domain/user.entity.js';
 import { UserRepository } from '../domain/user.repository.interface.js';
-import { EntityConflictException, EntityNotFoundException } from '../../common/exceptions/index.js';
-import { CreateUserDto, UserResponseDto } from './dtos/index.js';
+import { EntityConflictException, EntityNotFoundException } from '../../common/exceptions/domain-exception.js';
+import { CreateUserDto } from './dtos/create-user.dto.js';
+import { UserResponseDto } from './dtos/user-response.dto.js';
 
 @Injectable()
 export class UserService {

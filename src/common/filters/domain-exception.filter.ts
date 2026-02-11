@@ -12,7 +12,7 @@ import {
     EntityConflictException,
     UnauthorizedException,
     ForbiddenException,
-} from '../exceptions/index.js';
+} from '../exceptions/domain-exception.js';
 
 @Catch(DomainException)
 export class DomainExceptionFilter implements ExceptionFilter {

@@ -2,14 +2,14 @@ version: '3.8'
 
 services:
   postgres:
-    image: postgres:16-alpine
+    image: postgres:17.5-alpine
     container_name: social_media_db
     restart: unless-stopped
     ports:
-      - '5432:5432'
+      - '5435:5432'
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: user1
+      POSTGRES_PASSWORD: yes123
       POSTGRES_DB: social_media_db
     volumes:
       - pgdata:/var/lib/postgresql/data
