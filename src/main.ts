@@ -1,4 +1,4 @@
-import { NestFactory } from '@nestjs/core';
+import { NestFactory, Reflector } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
 import { AppModule } from './app.module.js';
 import { DomainExceptionFilter } from './common/filters/domain-exception.filter.js';
@@ -15,7 +15,8 @@ async function bootstrap() {
     }),
   );
 
-  app.useGlobalInterceptors(new UnifyResponseInterceptor());
+  const reflector = app.get(Reflector);
+  app.useGlobalInterceptors(new UnifyResponseInterceptor(reflector));
   app.useGlobalFilters(new DomainExceptionFilter());
 
   app.enableCors();
