@@ -4,7 +4,8 @@ import { ResponseMessage } from '../../common/decorators/response-message.decora
 import { JwtAuthGuard } from '../../auth/infrastructure/jwt-auth.guard.js';
 import { RolesGuard } from '../../auth/infrastructure/roles.guard.js';
 import { Roles } from '../../common/decorators/roles.decorator.js';
-import { UserRole } from '../domain/user.entity.js';
+import { User, UserRole } from '../domain/user.entity.js';
+import { UserResponseDto } from '../application/dtos/user-response.dto.js';
 
 @Controller('users')
 export class UserController {
@@ -15,13 +16,26 @@ export class UserController {
     @Roles(UserRole.ADMIN)
     @ResponseMessage('Successfully retrieved all users')
     async findAll() {
-        return this.userService.findAll();
+        const users = await this.userService.findAll();
+        return users.map((user) => this.toResponse(user));
     }
 
     @Get(':id')
     @UseGuards(JwtAuthGuard)
     @ResponseMessage('Successfully retrieved user by id')
     async findById(@Param('id') id: string) {
-        return this.userService.findById(id);
+        const user = await this.userService.findById(id);
+        return this.toResponse(user);
+    }
+
+    private toResponse(user: User): UserResponseDto {
+        const dto = new UserResponseDto();
+        dto.id = user.id;
+        dto.username = user.username;
+        dto.email = user.email;
+        dto.role = user.role;
+        dto.createdAt = user.createdAt;
+        dto.updatedAt = user.updatedAt;
+        return dto;
     }
 }

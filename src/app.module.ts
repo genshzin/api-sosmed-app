@@ -3,7 +3,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { UserModule } from './users/user.module.js';
 import { AuthModule } from './auth/auth.module.js';
+import { PostModule } from './posts/post.module.js';
 import { UserOrmEntity } from './users/infrastructure/persistence/user.orm-entity.js';
+import { PostOrmEntity } from './posts/infrastructure/persistence/post.orm-entity.js';
 
 @Module({
     imports: [
@@ -21,12 +23,13 @@ import { UserOrmEntity } from './users/infrastructure/persistence/user.orm-entit
                 username: configService.get<string>('DATABASE_USER'),
                 password: configService.get<string>('DATABASE_PASSWORD'),
                 database: configService.get<string>('DATABASE_NAME'),
-                entities: [UserOrmEntity],
+                entities: [UserOrmEntity, PostOrmEntity],
                 synchronize: true,
             }),
         }),
         UserModule,
         AuthModule,
+        PostModule,
     ],
 })
 export class AppModule { }
