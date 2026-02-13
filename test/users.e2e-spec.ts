@@ -125,4 +125,11 @@ describe('Users Module (e2e)', () => {
             .get(`/users/${adminUserId}`)
             .expect(401);
     });
+
+    it('/users/:id (GET) - should fail if token is invalid', () => {
+        return request(app.getHttpServer())
+            .get(`/users/${adminUserId}`)
+            .set('Authorization', 'Bearer invalid_token_here')
+            .expect(401);
+    });
 });
